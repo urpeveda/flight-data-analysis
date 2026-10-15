@@ -5,24 +5,33 @@ import numpy as np
 DATA_FILE = "Datos de vuelo rompetechos 1.xlsx"
 
 APOGEE = 3705
+G_SCALE = 16
 
-df = pd.read_excel(DATA_FILE, decimal = ",")
+BARO = "MS5611_H"
+# ["H331_Az", "H200_Az", "LSM_Az", "BMI_Az", "BNO_Az"]
+PRI_ACCEL = "LSM_Az" # LSM_Az seems the best
+G_ACCEL = "H331_Az"
 
-for row in df.index:
-    #df.loc[row, "ulFTime"] = row # Renumber x axis
+df = pd.read_excel(DATA_FILE, decimal=",")
 
-    if df.loc[row, "MS5611_H"] > APOGEE: # Remove main junk data
-        df.loc[row, "MS5611_H"] = np.nan
+# Remove main junk data
+df.loc[df[BARO] > APOGEE, BARO] = np.nan
 
-    if df.loc[row, "BMP581_P"] == 0:
-        df.loc[row, "BMP581_P"] = np.nan
+g_condition = (df[G_ACCEL] >= 16) | (df[G_ACCEL] <= -16)
+df.loc[g_condition, PRI_ACCEL] = df.loc[g_condition, G_ACCEL]
 
 # Remove other junk data
-df.loc[239:242, "MS5611_H"] = np.nan
-df.loc[1372, "MS5611_H"] = np.nan
-df.loc[3251, "MS5611_H"] = np.nan
+df.loc[239:242, BARO] = np.nan
+df.loc[1372, BARO] = np.nan
+df.loc[3251, BARO] = np.nan
 
-df.plot(y = "MS5611_H")
-#df.plot(y = [], secondary_y=True, ax = ax)
+df.loc[[1551, 1554], PRI_ACCEL] = np.nan
+
+# Create graph
+ax = df.plot(y=[BARO, PRI_ACCEL], secondary_y=PRI_ACCEL)
+
+ax.set_xlabel("Time")
+ax.set_ylabel("Barometric altitude (m)")
+ax.right_ax.set_ylabel("Acceleration (m/s^2)")
 
 plt.show()
