@@ -34,4 +34,40 @@ ax.set_xlabel("Time")
 ax.set_ylabel("Barometric altitude (m)")
 ax.right_ax.set_ylabel("Acceleration (m/s^2)")
 
+ax.axvline(x=83, color='grey', linewidth=0.7)
+ax.text(x=83+10, y=0.97, s='Liftoff', color='grey', 
+        transform=ax.get_xaxis_transform(), 
+        rotation=90,
+        verticalalignment='top')
+
+ax.axvline(x=241, color='grey', linewidth=0.7)
+ax.text(x=241+10, y=0.97, s='Burnout', color='grey', 
+        transform=ax.get_xaxis_transform(), 
+        rotation=90,
+        verticalalignment='top')
+
+ax.axvline(x=731, color='grey', linewidth=0.7)
+ax.text(x=731+10, y=0.97, s='Apogee', color='grey', 
+        transform=ax.get_xaxis_transform(), 
+        rotation=90,
+        verticalalignment='top')
+
+ax.axvline(x=803, color='grey', linewidth=0.7)
+ax.text(x=803+10, y=0.97, s='Drogue ejection', color='grey', 
+        transform=ax.get_xaxis_transform(), 
+        rotation=90,
+        verticalalignment='top')
+
+ax.axvline(x=803, color='grey', linewidth=0.7)
+ax.text(x=803+10, y=0.97, s='Drogue ejection', color='grey', 
+        transform=ax.get_xaxis_transform(), 
+        rotation=90,
+        verticalalignment='top')
+
+ax.axvline(x=3594, color='grey', linewidth=0.7)
+ax.text(x=3594+10, y=0.97, s='Ground hit', color='grey', 
+        transform=ax.get_xaxis_transform(), 
+        rotation=90,
+        verticalalignment='top')
+
 plt.show()
