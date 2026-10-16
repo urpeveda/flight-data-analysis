@@ -4,6 +4,8 @@ import numpy as np
 
 DATA_FILE = "Datos de vuelo rompetechos 1.xlsx"
 
+g = 9.81
+
 APOGEE = 3705
 G_SCALE = 16
 
@@ -23,7 +25,7 @@ df = pd.read_excel(DATA_FILE, decimal=",")
 # Remove main junk data
 df.loc[df[BARO] > APOGEE, BARO] = np.nan
 
-g_condition = (df[G_ACCEL] >= 16) | (df[G_ACCEL] <= -16)
+g_condition = (df[G_ACCEL] >= G_SCALE*g) | (df[G_ACCEL] <= -G_SCALE*g)
 df.loc[g_condition, PRI_ACCEL] = df.loc[g_condition, G_ACCEL]
 
 # Remove other junk data
