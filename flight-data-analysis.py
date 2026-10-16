@@ -12,6 +12,12 @@ BARO = "MS5611_H"
 PRI_ACCEL = "LSM_Az" # LSM_Az seems the best
 G_ACCEL = "H331_Az"
 
+def plot_line(ax, pos, label):
+    ax.axvline(x=pos, color='grey', linewidth=0.7)
+    ax.text(x=pos+10, y=0.97, s=label, color='grey',
+            transform=ax.get_xaxis_transform(), rotation=90,
+            verticalalignment='top')
+
 df = pd.read_excel(DATA_FILE, decimal=",")
 
 # Remove main junk data
@@ -34,40 +40,10 @@ ax.set_xlabel("Time")
 ax.set_ylabel("Barometric altitude (m)")
 ax.right_ax.set_ylabel("Acceleration (m/s^2)")
 
-ax.axvline(x=83, color='grey', linewidth=0.7)
-ax.text(x=83+10, y=0.97, s='Liftoff', color='grey', 
-        transform=ax.get_xaxis_transform(), 
-        rotation=90,
-        verticalalignment='top')
-
-ax.axvline(x=241, color='grey', linewidth=0.7)
-ax.text(x=241+10, y=0.97, s='Burnout', color='grey', 
-        transform=ax.get_xaxis_transform(), 
-        rotation=90,
-        verticalalignment='top')
-
-ax.axvline(x=731, color='grey', linewidth=0.7)
-ax.text(x=731+10, y=0.97, s='Apogee', color='grey', 
-        transform=ax.get_xaxis_transform(), 
-        rotation=90,
-        verticalalignment='top')
-
-ax.axvline(x=803, color='grey', linewidth=0.7)
-ax.text(x=803+10, y=0.97, s='Drogue ejection', color='grey', 
-        transform=ax.get_xaxis_transform(), 
-        rotation=90,
-        verticalalignment='top')
-
-ax.axvline(x=803, color='grey', linewidth=0.7)
-ax.text(x=803+10, y=0.97, s='Drogue ejection', color='grey', 
-        transform=ax.get_xaxis_transform(), 
-        rotation=90,
-        verticalalignment='top')
-
-ax.axvline(x=3594, color='grey', linewidth=0.7)
-ax.text(x=3594+10, y=0.97, s='Ground hit', color='grey', 
-        transform=ax.get_xaxis_transform(), 
-        rotation=90,
-        verticalalignment='top')
+plot_line(ax, 83, "Liftoff")
+plot_line(ax, 241, "Burnout")
+plot_line(ax, 731, "Apogee")
+plot_line(ax, 803, "Drogue ejection")
+plot_line(ax, 3594, "Ground hit")
 
 plt.show()
